@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title></title>
+</head>
+
+<body>
+  <form action="/students/delete/<%=dataStudents.id%>" method="POST">
+
+    <input type="text" name="first_name" value="<%=dataStudents.first_name%>" readonly><br>
+    <input type="text" name="last_name" value="<%=dataStudents.last_name%>" readonly><br>
+    <input type="text" name="email" value="<%=dataStudents.email%>" readonly><br>
+
+    <input type="submit" value="Delete">
+  </form>
+</body>
+
+</html>
