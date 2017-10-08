@@ -1,31 +1,38 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta charset="utf-8">
+    <% include ./partials/pageTitle %>
     <title></title>
   </head>
   <body>
-    <table style="width:30%">
+    <table>
  <tr>
-   <th>ID Student</th>
+   <th>No</th>
+   <th>ID</th>
    <th>First Name</th>
    <th>Last Name</th>
-   <th>Create Date</th>
-   <th>Update Date</th>
+   <!-- <th>Create Date</th> -->
+   <!-- <th>Update Date</th> -->
    <th>Email</th>
+   <th>Actions</th>
+   <th>Options</th>
  </tr>
+ <% let i=1 %>
  <% dataStudents.forEach(Student=>{   %>
  <tr>
+   <td><%=i%></td>
    <td><%=Student.id%></td>
    <td><%=Student.first_name%></td>
    <td><%=Student.last_name%></td>
-   <td><%=Student.createdAt%></td>
-   <td><%=Student.updatedAt%></td>
+   <!-- <td><%=Student.createdAt%></td> -->
+   <!-- <td><%=Student.updatedAt%></td> -->
    <td><%=Student.email%></td>
-   <td><a href="/students/edit/<%=Student.id%>">edit</a></td>
-   <td><a href="/students/delete/<%=Student.id%>">delete</a></td>
+   <td><a href="/students/<%=Student.id%>/addSubject">Add Subject</a></td>
+   <td><a href="/students/edit/<%=Student.id%>">Edit</a> | <a href="/students/delete/<%=Student.id%>">Delete</a></td>
+   <!-- <td><a href="/students/delete/<%=Student.id%>">Delete</a></td> -->
 
  </tr>
+ <% i++ %>
  <% }) %>
 </table>
   </body>

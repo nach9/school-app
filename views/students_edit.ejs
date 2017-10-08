@@ -3,17 +3,14 @@
 
 <head>
   <meta charset="utf-8">
+  <% include ./partials/pageTitle %>
+
   <title></title>
 </head>
 
 <body>
-  <form action="/students/edit/<%=dataStudents.id%>" method="POST">
-
-    <input type="text" name="first_name" value="<%=dataStudents.first_name%>"><br>
-    <input type="text" name="last_name" value="<%=dataStudents.last_name%>"><br>
-    <input type="text" name="email" value="<%=dataStudents.email%>"><br>
-
-    <input type="submit" value="Edit">
+  <form action="/students/edit/<%=dataRow.id%>" method="POST">
+    <% include ./partials/pageFormEdit %>
   </form>
 </body>
 

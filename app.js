@@ -9,14 +9,16 @@ app.use(bodyParser.json())
 const teachers = require('./routes/teachers')
 const subjects = require('./routes/subjects')
 const students = require('./routes/students')
+const index = require('./routes/index')
 
 var ejs = require('ejs')
 app.set('view engine','ejs')
 
-  app.get('/', function (req, res) {
-    res.send('Hello World!')
+  app.get('/',(req,res)=>{
+    res.redirect('/index')
   })
 
+  app.use('/index', index);
   app.use('/teachers', teachers);
   app.use('/subjects', subjects);
   app.use('/students', students);

@@ -1,23 +1,32 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta charset="utf-8">
+    <% include ./partials/pageTitle %>
+
     <title></title>
   </head>
   <body>
-    <table style="width:30%">
+    <table>
  <tr>
-   <th>ID Subject</th>
+   <th>ID</th>
    <th>Subject Name</th>
-   <th>Create Date</th>
-   <th>Update Date</th>
+   <th>Teachers</th>
+   <th>Actions</th>
  </tr>
  <% dataSubjects.forEach(Subject=>{   %>
  <tr>
    <td><%=Subject.id%></td>
    <td><%=Subject.subject_name%></td>
-   <td><%=Subject.createdAt%></td>
-   <td><%=Subject.updatedAt%></td>
+   <td>
+   <%let i=1%>
+   <% if(Subject.Teachers){%>
+     <% Subject.Teachers.forEach(Teacher=>{%>
+       <%=i + '. ' + Teacher.first_name%><br>
+       <%i++%>
+     <%}) %>
+   <% } %>
+ </td>
+   <td><a href="/subjects/<%=Subject.id%>/enrolledstudents">Enrolled Students</a></td>
  </tr>
  <% }) %>
 </table>

@@ -1,29 +1,38 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta charset="utf-8">
-    <title></title>
+    <% include ./partials/pageTitle %>
+
+  <title></title>
   </head>
-  <body>
-    <table style="width:30%">
- <tr>
-   <th>ID Teacher</th>
-   <th>First Name</th>
-   <th>Last Name</th>
-   <th>Create Date</th>
-   <th>Update Date</th>
-   <th>Email</th>
- </tr>
- <% dataTeachers.forEach(Teacher=>{   %>
- <tr>
-   <td><%=Teacher.id%></td>
-   <td><%=Teacher.first_name%></td>
-   <td><%=Teacher.last_name%></td>
-   <td><%=Teacher.createdAt%></td>
-   <td><%=Teacher.updatedAt%></td>
-   <td><%=Teacher.email%></td>
- </tr>
- <% }) %>
-</table>
+<body>
+  <table>
+   <tr>
+     <th>No</th>
+     <th>ID</th>
+     <th>First Name</th>
+     <th>Last Name</th>
+     <th>Email</th>
+     <th>Subject</th>
+     <th>Options</th>
+   </tr>
+   <%let i=1%>
+   <% dataTeachers.forEach(Teacher=>{   %>
+   <tr>
+     <td><%=i%></td>
+     <td><%=Teacher.id%></td>
+     <td><%=Teacher.first_name%></td>
+     <td><%=Teacher.last_name%></td>
+     <td><%=Teacher.email%></td>
+     <%if(Teacher.Subject){%>
+        <td><%=Teacher.Subject.subject_name%></td>
+     <%}else{%>
+       <td>Unassigned</td>
+     <%}%>
+     <td><a href="/teachers/edit/<%=Teacher.id%>">Edit</a> | <a href="/teachers/delete/<%=Teacher.id%>">Delete</a></td>
+   </tr>
+   <%i++%>
+   <% }) %>
+  </table>
   </body>
 </html>

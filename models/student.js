@@ -8,7 +8,7 @@ module.exports = (sequelize, DataTypes) => {
       unique: true,
       validate: {
         isEmail: {
-          msg: "Email address must be valid"
+          msg: "Email format is incorrect"
         }
       }
     }
@@ -19,5 +19,8 @@ module.exports = (sequelize, DataTypes) => {
       }
     }
   });
+  Student.associate = function(models) {
+    Student.belongsToMany(models.Subject, {through:models.Student_Subject})
+  }
   return Student;
 };

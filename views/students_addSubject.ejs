@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <!-- <meta charset="utf-8"> -->
+    <% include ./partials/pageTitle %>
+
+    <title></title>
+  </head>
+  <body>
+    <table>
+      <tr>
+        <td>First Name</td>
+        <td><%=dataStudent.first_name%></td>
+      </tr>
+      <tr>
+        <td>Last Name</td>
+        <td><%=dataStudent.last_name%></td>
+      </tr>
+      <tr>
+        <td>Email</td>
+        <td><%=dataStudent.email%></td>
+      </tr>
+    </table>
+    <form class="" action="/students/<%=dataStudent.id%>/addsubject" method="POST">
+      <select class="" name="SubjectId" required>
+        <option value="">--please select--</option>
+        <% dataSubjects.forEach(Subject=>{%>
+          <option value="<%=Subject.id%>"><%=Subject.subject_name%></option>
+        <%}) %>
+      </select><br>
+      <input type="submit" value="Add Subject">
+    </form>
+  </body>
+</html>

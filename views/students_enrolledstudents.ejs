@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <% include ./partials/pageTitle %>
+
+    <title></title>
+  </head>
+  <body>
+    <h3><%=dataSubject.subject_name%></h3>
+    <table>
+      <tr>
+        <th>No</th>
+        <th>Name</th>
+        <th>Score</th>
+        <th>Score By Letter</th>
+      </tr>
+      <%if(dataSubject.Students){%>
+        <% let i=1%>
+        <% dataSubject.Students.forEach(student=>{%>
+          <tr>
+            <td><%=i%></td>
+            <td><%=student.first_name%></td>
+            <% if(student.Student_Subject.score){%>
+              <td><%=student.Student_Subject.score%></td>
+            <%} else {%>
+              <td><a href="/subjects/<%=dataSubject.id%>/<%=student.Student_Subject.StudentId%>/givescore">Give Score</a></td>
+            <%}%>
+            <td><%=student.Student_Subject.getScoreToLetter()%></td>
+            <%i++%>
+          </tr>
+        <%})%>
+      <%}%>
+
+    </table>
+  </body>
+</html>
