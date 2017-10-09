@@ -17,9 +17,7 @@ module.exports = (sequelize, DataTypes) => {
   //   Student_Subject.belongsToMany(models.Subject)
   // }
   Student_Subject.prototype.getScoreToLetter = function() {
-
     return scoreToLetter(this.score);
-
 }
   return Student_Subject;
 };

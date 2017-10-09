@@ -72,24 +72,37 @@ th {
 }
 
 </style>
-<h1>iSchool</h1>
+  <h1>iSchool</h1>
 <ul>
   <li><a href="/index">Home</a></li>
   <li class="dropdown">
-    <a href="javascript:void(0)" class="dropbtn">Students</a>
+    <a href="/login" class="dropbtn">Login</a>
     <div class="dropdown-content">
-      <a href="/students">List Students</a>
+      <a href="/login/add">Add User</a>
+      <a href="/login/out">Logout</a>
+    </div>
+  </li>
+  <% if (typeof sessionrole!='undefined'){%>
+  <% if(['teacher','academic','headmaster'].indexOf(sessionrole)!=-1){ %>
+  <li class="dropdown">
+    <a href="/students" class="dropbtn">Students</a>
+    <div class="dropdown-content">
       <a href="/students/add">Add Student</a>
     </div>
-
+  </li>
+  <%}}%>
+  <% if (typeof sessionrole!='undefined'){%>
+  <% if(['headmaster'].indexOf(sessionrole)!=-1){ %>
   <li class="dropdown">
-    <a href="javascript:void(0)" class="dropbtn">Teachers</a>
+    <a href="/teachers" class="dropbtn">Teachers</a>
     <div class="dropdown-content">
-      <a href="/teachers">List Teachers</a>
       <a href="/teachers/add">Add Teacher</a>
     </div>
   </li>
-
+  <%}}%>
+  <% if (typeof sessionrole!='undefined'){%>
+  <% if(['academic','headmaster'].indexOf(sessionrole)!=-1){ %>
   <li><a href="/subjects">Subjects</a></li>
+  <%}}%>
 
 </ul>

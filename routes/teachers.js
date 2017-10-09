@@ -2,14 +2,21 @@ const express = require('express')
 const app = express()
 const router = express.Router();
 
-var bodyParser = require('body-parser')
-
-app.use(bodyParser.urlencoded({ extended: false }))
-app.use(bodyParser.json())
-
-
-
 const Models = require('../models')
+
+router.use((req,res,next)=>{
+  if(req.session && req.session.hasOwnProperty('username')  ){
+    if (['headmaster'].indexOf(req.session.role)!=-1){
+      next()
+    }
+    else{
+      res.render('index')
+    }
+  }
+  else {
+    res.render('index')
+  }
+})
 
 router.get('/', function(req, res) {
   let condition={
@@ -17,7 +24,7 @@ router.get('/', function(req, res) {
     include : [{model: Models.Subject}]
   }
   Models.Teacher.findAll(condition).then(dataTeachers => {
-    res.render('teachers' , { dataTeachers:dataTeachers })
+    res.render('teachers' , { dataTeachers:dataTeachers ,sessionrole : req.session.role})
 }).catch((err)=>{
   console.log(err);
 })
@@ -38,7 +45,7 @@ router.post('/add' , (req,res)=>{
 
 router.get('/edit/:id' , (req,res)=>{
   Models.Teacher.findById(req.params.id).then((dataTeachers)=>{
-    res.render('teachers_edit', { dataRow:dataTeachers  })
+    res.render('teachers_edit', { dataRow:dataTeachers ,sessionrole : req.session.role })
   })
 })
 
@@ -52,7 +59,7 @@ router.post('/edit/:id' , (req,res)=>{
 
 router.get('/delete/:id' , (req,res)=>{
   Models.Teacher.findById(req.params.id).then((dataTeachers)=>{
-    res.render('teachers_delete', { dataRow:dataTeachers  })
+    res.render('teachers_delete', { dataRow:dataTeachers ,sessionrole : req.session.role })
   })
 })
 

@@ -3,20 +3,28 @@ const app = express()
 const router = express.Router();
 const Sequelize = require('sequelize')
 
-
-var bodyParser = require('body-parser')
-
-app.use(bodyParser.urlencoded({ extended: false }))
-app.use(bodyParser.json())
-
 const Models = require('../models')
+
+router.use((req,res,next)=>{
+  if(req.session && req.session.hasOwnProperty('username')  ){
+    if (['headmaster','academic'].indexOf(req.session.role)!=-1){
+      next()
+    }
+    else{
+      res.render('index')
+    }
+  }
+  else {
+    res.render('index')
+  }
+})
 
 router.get('/', function(req, res) {
   let condition ={
     include : [{ model : Models.Teacher}]
   }
   Models.Subject.findAll(condition).then(dataSubjects => {
-    res.render('subjects' , { dataSubjects:dataSubjects })
+    res.render('subjects' , { dataSubjects:dataSubjects,sessionrole : req.session.role })
   })
 });
 
@@ -27,7 +35,7 @@ router.get('/:id/enrolledstudents' , (req,res)=>{
   }
   Models.Subject.findById(req.params.id,condition).then(dataSubject=>{
     // res.send(dataSubject)
-    res.render('students_enrolledstudents', {dataSubject:dataSubject})
+    res.render('students_enrolledstudents', {dataSubject:dataSubject,sessionrole : req.session.role})
   })
 })
 
@@ -36,7 +44,7 @@ router.get('/:id/:StudentId/givescore',(req,res)=>{
     Models.Student.findById(req.params.StudentId),
     Models.Subject.findById(req.params.id)
   ]).then(dataStudent=>{
-    res.render('students_givescore', {dataStudent:dataStudent[0] , dataSubject:dataStudent[1]})
+    res.render('students_givescore', {dataStudent:dataStudent[0] , dataSubject:dataStudent[1],sessionrole : req.session.role})
   })
 })
 

@@ -4,17 +4,31 @@ const router = express.Router();
 
 const Models = require('../models')
 
+router.use((req,res,next)=>{
+  if(req.session && req.session.hasOwnProperty('username')  ){
+    if (['headmaster','academic','teacher'].indexOf(req.session.role)!=-1){
+      next()
+    }
+    else{
+      res.render('index')
+    }
+  }
+  else {
+    res.render('index')
+  }
+})
+
 router.get('/', function(req, res) {
   let condition={
     order:[['first_name','ASC']]
   }
   Models.Student.findAll(condition).then(dataStudents => {
-    res.render('students' , { dataStudents:dataStudents })
+    res.render('students' , { dataStudents:dataStudents , sessionrole : req.session.role })
   })
 });
 
 router.get('/add' , (req,res)=>{
-  res.render('students_add')
+  res.render('students_add',{sessionrole : req.session.role})
 })
 
 router.post('/add' , (req,res)=>{
@@ -29,7 +43,7 @@ router.post('/add' , (req,res)=>{
 
 router.get('/edit/:id' , (req,res)=>{
   Models.Student.findById(req.params.id).then((dataStudents)=>{
-    res.render('students_edit', { dataRow :dataStudents  })
+    res.render('students_edit', { dataRow :dataStudents ,sessionrole : req.session.role  })
   })
 })
 
@@ -44,7 +58,7 @@ router.post('/edit/:id' , (req,res)=>{
 
 router.get('/delete/:id' , (req,res)=>{
   Models.Student.findById(req.params.id).then((dataStudents)=>{
-    res.render('students_delete', { dataRow:dataStudents  })
+    res.render('students_delete', { dataRow:dataStudents,sessionrole : req.session.role  })
   })
 })
 
@@ -59,7 +73,7 @@ router.get('/:id/addsubject' , (req,res)=>{
     Models.Student.findById(req.params.id) ,
     Models.Subject.findAll()
   ]).then(dataStudent=>{
-    res.render('students_addSubject' , { dataStudent : dataStudent[0] , dataSubjects : dataStudent[1]})
+    res.render('students_addSubject' , { dataStudent : dataStudent[0] , dataSubjects : dataStudent[1],sessionrole : req.session.role})
   })
 })
 
